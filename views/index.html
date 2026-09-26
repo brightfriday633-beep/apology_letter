@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>for you, Asa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Italianno&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- ===== INTRO — "Hi babe" handwritten ===== -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__text" id="introText" aria-label="Hi babe"></div>
+    <span class="intro__cursor" id="introCursor" aria-hidden="true"></span>
+  </div>
+
+  <!-- ===== VIDEO BACKGROUND ===== -->
+  <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto">
+    <source src="../assets/myvideo.mp4" type="video/mp4" />
+  </video>
+  <div class="bg-overlay" id="bgOverlay" aria-hidden="true"></div>
+
+  <!-- ===== AMBIENT MUSIC ===== -->
+  <audio id="ambient" loop preload="auto">
+    <source src="../assets/ambient.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ===== STAGE — floating text ===== -->
+  <main class="stage" id="stage" role="main" aria-label="A message from Bright" tabindex="0">
+    <div class="stage__inner" id="stageInner"></div>
+  </main>
+
+  <!-- ===== TAP HINT ===== -->
+  <div class="tap-hint" id="tapHint" aria-hidden="true">tap to pause</div>
+
+  <!-- ===== FINAL PAGE ===== -->
+  <section class="finale" id="finale" aria-hidden="true">
+    <div class="finale__inner">
+      <p class="finale__line finale__line--love">I love you mama</p>
+      <p class="finale__line finale__line--joke">
+        and I will always be annoying <span class="finale__emoji" aria-hidden="true">&#128514;</span>
+      </p>
+      <p class="finale__line finale__line--bless">now bless me with bwess <span class="finale__emoji" aria-hidden="true">&#128591;</span></p>
+    </div>
+  </section>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+﻿:root {
+  --cream: #f4ead9;
+  --cream-soft: #e6d9c1;
+  --cream-dim: rgba(244, 234, 217, 0.55);
+  --gold: #e8c7a0;
+  --gold-soft: #d4b58c;
+  --rose: #c98b7a;
+  --ink-shadow: 0 2px 20px rgba(0, 0, 0, 0.7), 0 1px 4px rgba(0, 0, 0, 0.5);
+  --font-serif: "Cormorant Garamond", serif;
+  --font-hand: "Italianno", cursive;
+  --font-script: "Dancing Script", cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #0a0604;
+}
+
+body {
+  font-family: var(--font-serif);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+   INTRO — "Hi babe" handwritten
+   ============================================================ */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 50%, #1c1611 0%, #0a0604 75%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.2s ease, visibility 0s linear 1.2s;
+}
+.intro.is-hiding {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.intro.is-hidden { display: none; }
+
+.intro__text {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-hand);
+  font-size: clamp(4rem, 16vw, 8rem);
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-shadow: 0 6px 32px rgba(232, 199, 160, 0.28);
+  white-space: nowrap;
+}
+.intro__letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px) rotate(-3deg);
+  animation: letterWrite 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes letterWrite {
+  from { opacity: 0; transform: translateY(10px) rotate(-4deg); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0) rotate(0deg); filter: blur(0); }
+}
+.intro__cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: var(--gold);
+  margin-left: 0.06em;
+  vertical-align: text-bottom;
+  transform: translateY(0.05em);
+  opacity: 0;
+  animation: cursorBlink 0.9s ease-in-out infinite;
+}
+.intro__cursor.is-visible { opacity: 1; }
+@keyframes cursorBlink {
+  0%, 45%   { opacity: 1; }
+  55%, 100% { opacity: 0.15; }
+}
+
+/* ============================================================
+   VIDEO BACKGROUND
+   ============================================================ */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease 0.3s;
+}
+.bg-video.is-visible { opacity: 1; }
+
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(15, 10, 6, 0.35) 0%, rgba(10, 6, 4, 0.85) 80%),
+    linear-gradient(180deg, rgba(10, 6, 4, 0.5) 0%, rgba(10, 6, 4, 0.75) 100%);
+  opacity: 0;
+  transition: opacity 2s ease 0.3s;
+}
+.bg-overlay.is-visible { opacity: 1; }
+
+/* ============================================================
+   STAGE
+   ============================================================ */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 6vw, 4rem);
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.stage.is-visible { opacity: 1; }
+
+.stage__inner {
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+  position: relative;
+}
+
+/* ============================================================
+   LINE
+   ============================================================ */
+.line {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  text-shadow: var(--ink-shadow);
+  margin-bottom: clamp(1.1rem, 3.5vh, 1.8rem);
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  filter: blur(4px);
+  transition:
+    opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.line.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+.line.is-fading {
+  opacity: 0.35;
+  transform: translateY(-4px) scale(0.99);
+  filter: blur(1.5px);
+}
+
+/* Variations */
+.line--dedication {
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--gold-soft);
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(2rem, 6vh, 3rem);
+  text-shadow: 0 3px 18px rgba(232, 199, 160, 0.35), var(--ink-shadow);
+  font-style: normal;
+}
+.line--hand {
+  font-family: var(--font-hand);
+  font-size: clamp(2.8rem, 9vw, 5rem);
+  color: var(--gold);
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  text-shadow: 0 4px 30px rgba(232, 199, 160, 0.4), var(--ink-shadow);
+  margin-bottom: clamp(1.6rem, 5vh, 2.4rem);
+}
+.line--italic {
+  font-style: italic;
+  color: var(--cream-soft);
+}
+.line--signature {
+  font-family: var(--font-script);
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  color: var(--gold);
+  line-height: 1;
+  margin-top: clamp(1.4rem, 4vh, 2rem);
+  margin-bottom: 0;
+  text-shadow: 0 4px 30px rgba(232, 199, 160, 0.35), var(--ink-shadow);
+}
+.line--heart {
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  color: var(--rose);
+  margin-bottom: clamp(0.8rem, 2.5vh, 1.2rem);
+}
+.line--heart.is-visible {
+  animation: heartBeat 1.4s ease-in-out 2;
+}
+@keyframes heartBeat {
+  0%   { transform: scale(1);    filter: drop-shadow(0 0 0 transparent); }
+  25%  { transform: scale(1.18); filter: drop-shadow(0 0 16px rgba(201, 139, 122, 0.7)); }
+  50%  { transform: scale(1);    filter: drop-shadow(0 0 0 transparent); }
+  75%  { transform: scale(1.15); filter: drop-shadow(0 0 12px rgba(201, 139, 122, 0.5)); }
+  100% { transform: scale(1);    filter: drop-shadow(0 0 0 transparent); }
+}
+.line--quiet {
+  font-size: clamp(1.1rem, 3.2vw, 1.5rem);
+  color: var(--cream-dim);
+  font-style: italic;
+}
+
+/* ============================================================
+   TAP HINT
+   ============================================================ */
+.tap-hint {
+  position: fixed;
+  bottom: clamp(1.2rem, 4vh, 2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: var(--font-serif);
+  font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(244, 234, 217, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.tap-hint.is-visible { opacity: 1; }
+.tap-hint.is-paused { color: rgba(232, 199, 160, 0.85); }
+
+/* ============================================================
+   FINALE
+   ============================================================ */
+.finale {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #0a0604;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.4s ease, visibility 0s linear 1.4s;
+}
+.finale.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.4s ease, visibility 0s linear 0s;
+}
+
+.finale__inner {
+  text-align: center;
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: finaleReveal 1.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s forwards;
+  animation-play-state: paused;
+}
+.finale.is-active .finale__inner { animation-play-state: running; }
+
+@keyframes finaleReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.finale__line {
+  font-family: var(--font-serif);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+}
+
+.finale__line--love {
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  color: var(--gold);
+  line-height: 1.05;
+  margin-bottom: clamp(1rem, 3vh, 1.6rem);
+  text-shadow:
+    0 6px 40px rgba(232, 199, 160, 0.35),
+    0 2px 20px rgba(0, 0, 0, 0.7);
+}
+
+.finale__line--joke {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  color: var(--cream-soft);
+  text-shadow: var(--ink-shadow);
+  margin-bottom: clamp(2.4rem, 7vh, 4rem);
+}
+
+.finale__line--bless {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 3.2vw, 1.4rem);
+  letter-spacing: 0.12em;
+  color: var(--cream-dim);
+  text-shadow: var(--ink-shadow);
+  opacity: 0;
+  animation: blessFadeIn 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) 2.4s forwards;
+  animation-play-state: paused;
+}
+.finale.is-active .finale__line--bless { animation-play-state: running; }
+
+@keyframes blessFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.finale__emoji {
+  display: inline-block;
+  font-style: normal;
+  margin-left: 0.15em;
+  animation: emojiWiggle 2.2s ease-in-out infinite;
+  animation-play-state: paused;
+  transform-origin: center bottom;
+}
+.finale.is-active .finale__emoji { animation-play-state: running; }
+
+@keyframes emojiWiggle {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    transition: opacity 0.5s ease !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .line.is-visible { opacity: 1; }
+  .line.is-fading { opacity: 0.4; }
+  .intro__letter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .intro__cursor { animation: none !important; }
+  .bg-video, .bg-overlay, .stage, .intro { transition: none !important; }
+  .finale__inner,
+  .finale__emoji,
+  .finale__line--bless {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .finale { transition: none !important; }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 600px) {
+  .stage { padding: 1.2rem; }
+  .line { font-size: 1.25rem; line-height: 1.55; margin-bottom: 1rem; }
+  .line--hand { font-size: 2.4rem; margin-bottom: 1.4rem; }
+  .line--dedication { font-size: 1.5rem; margin-bottom: 2rem; }
+  .line--signature { font-size: 2.2rem; }
+  .finale__line--love { font-size: 3rem; }
+  .finale__line--joke { font-size: 1.2rem; margin-bottom: 2.2rem; }
+  .finale__line--bless { font-size: 1rem; letter-spacing: 0.1em; }
+}
